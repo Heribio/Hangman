@@ -1,0 +1,81 @@
+body {
+    font-family: 'Rubik Mono One', monospace;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+#container {
+    display: flex;
+    width: 100%;
+    margin: 5%;
+}
+
+#hangman-box {
+    flex: 1;
+    padding: 20px;
+    margin-right: 10px;
+    border-radius: 20px;
+    background: #7768AE;
+}
+
+#right-box {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+}
+
+#top-right {
+    flex: 3;
+    border-radius: 20px;
+    background: #4D9DE0;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+#bottom-right {
+    flex: 1;
+    display: flex;
+    align-items: center; /* Center vertically */
+    background-color: #E15554;
+    padding: 10px;
+    border-radius: 20px;
+    padding: 5%;
+}
+
+.explanatory-text, .label, .title{
+    color: #FFF;
+    font-family: 'Rubik', sans-serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.label {
+    padding: 20px;
+    font-size: 64px;
+}
+
+.title {
+    text-align: center;
+    font-size: 64px;
+    color: #FFA800;
+}
+
+#word-display {
+    display: flex; /* Make it a flex container */
+    align-items: center; /* Align items vertically in the flex container */
+}
+
+.letter-box {
+    width: 50px;
+    height: 50px;
+    background-color: green;
+    margin: 10px;
+    border-radius: 10px;
+}
