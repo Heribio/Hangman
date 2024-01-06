@@ -1,9 +1,13 @@
 const dotenv = require('dotenv');
 dotenv.config();
-const { Client, IntentsBitField, ActivityType, NewsChannel } = require("discord.js");
 require("dotenv/config")
 const fs = require('fs');
-const axios = require('axios'); // Import the axios library
+const axios = require('axios');
+const express = require("express");
+
+const port = 5000;
+const app = express();
+app.use(express.json());
 
 //Create a word and display it
 function randomword() {
@@ -34,37 +38,11 @@ function randomword() {
   });
 }
 
-const tmi = require('tmi.js');
-
-// Define configuration options
-const opts = {
-  identity: {
-    username: 'BotHeri',
-    password: '454os7dkrzcyfccuzbmn1a7aq4j80l'
-  },
-  channels: [
-    'Heribio'
-  ]
-};
-
-// Create a client with our options
-const client = new tmi.client(opts);
-
-// Register our event handlers (defined below)
-client.on('message', onMessageHandler);
-client.on('connected', onConnectedHandler);
-
-// Connect to Twitch:
-client.connect();
-
 // Called every time a message comes in
-function onMessageHandler(target, context, msg, self) {
+function onMessageHandler(target, userMessage, self) {
     if (self) {
       return; // Ignore messages from the bot
     }
-  
-    // Remove whitespace from chat message
-    const userMessage = msg.trim();
   
     // If the command is known, let's execute it
     if (userMessage.length === 1 && isNaN(userMessage)) {
@@ -84,6 +62,31 @@ function onMessageHandler(target, context, msg, self) {
       console.log(`* Ignoring message: ${userMessage}`);
     }
   }
+
+  app.post("/twitch", (req, res) => {
+    const twitchMessage = req.body;
+    console.log(twitchMessage);
+  
+    const userMessage = twitchMessage.content.trim();
+  
+    if (userMessage.length === 1 && isNaN(userMessage)) {
+      // Emit an event or send a message to the client-side (browser)
+      // to handle this message (e.g., update the displayed word)
+      onMessageHandler(userMessage);
+      res.sendStatus(200);
+    } else {
+      res.status(400).send("Invalid Twitch message format");
+    }
+  });
+  
+  app.listen(port, () => {
+    console.log(`Discord bridge listening at http://localhost:${port}`);
+  });
+  
+  function onConnectedHandler(addr, port) {
+    console.log(`* Connected to ${addr}:${port}`);
+  }
+  
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) {
