@@ -1,0 +1,16 @@
+<div class="chat-container"
+    [ngStyle]="{top, bottom, left, right, width, height, borderRadius, backgroundColor, position, containerPadding}">
+    <!-- Iterate over chat array -->
+    <ng-container *ngFor="let messageContainer of messageContainers; let i = index;">
+        <div class="render-reverse-column"
+            [style.borderBottom]="i == 0 ? '5px solid ' + messageContainer.barColor : ''"
+            [style.borderTop]="i == 1 ? '5px solid ' + messageContainer.barColor : ''"
+            [style.height]="'' + (100 / (messageContainers.length)) + '%'"
+            [style.backgroundColor]="messageContainer.backgroundColor"
+            [style.margin]="messagesMargin">
+            <ng-container *ngFor="let message of messageContainer.messages">
+                <app-chat-message [message]="message"></app-chat-message>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>
