@@ -11,8 +11,41 @@ body {
 
 #container {
     display: flex;
-    width: 100%;
+    width: 90%;
     margin: 5%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}
+
+#chat-box {
+    display: flex;
+    width: 20%;
+    flex-direction: column;
+}
+
+#chat-box-header {
+    height: 120px;
+    border-bottom: 1px solid #A7A7A7;
+    background-color: #2B2D31;
+}
+
+#chat-box-title {
+    color: #FFF;
+    font-family: 'Rubik', sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+    padding-top: 40px;
+}
+
+#chat-box-content {
+    height: 960px;
+    background-color: #2B2D31;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 #hangman-box {

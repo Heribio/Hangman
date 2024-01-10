@@ -1,8 +1,3 @@
-const dotenv = require('dotenv');
-dotenv.config();
-require("dotenv/config")
-const fs = require('fs');
-const axios = require('axios');
 const express = require("express");
 
 const port = 5000;
@@ -13,7 +8,7 @@ app.use(express.json());
 function randomword() {
   fetch('https://api.api-ninjas.com/v1/randomword', {
       headers: {
-          'X-Api-Key': "jPf+s0IH8KBzaoTat6APZA==De1VONvhfb5hnmzu"
+          'X-Api-Key': ""
       }
   })
   .then(response => {
