@@ -14,6 +14,8 @@ socket.on('chat_message', (data) => {
     const authorDiv = document.createElement('div');
     authorDiv.className = 'chat-message-username';
     authorDiv.textContent = data.displayName;
+    const roleColor = data.roles[0]; // Assuming there's only one role
+    authorDiv.style.color = `rgb(${roleColor.colorR}, ${roleColor.colorG}, ${roleColor.colorB})`;
 
     const contentDiv = document.createElement('div');
     contentDiv.textContent = data.content;
