@@ -45,7 +45,25 @@ body {
     background-color: #2B2D31;
     overflow: hidden;
     display: flex;
+    flex-direction: column-reverse;
+}
+
+.chat-message {
+    display: flex;
     flex-direction: column;
+    padding: 15px;
+}
+
+.chat-message-username {
+    color: #FFF;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.chat-message-content {
+    color: #FFF;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
 }
 
 #hangman-box {
