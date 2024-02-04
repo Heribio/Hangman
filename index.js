@@ -2,6 +2,7 @@ const socket = io.connect("http://localhost:6969/twitch");
 
 socket.on("connect", () => {
     console.log("Connected to server via WebSocket");
+    ask_word();
 });
 
 socket.on("chat_message", (data) => {
@@ -40,6 +41,8 @@ function new_word(data) {
     console.log(data);
     // Assuming you have a container for the letter boxes
     const letterContainer = document.getElementById("word-display");
+    const wrongContainer = document.getElementById("wrong-letters")
+
 
     // Clear the previous content
     letterContainer.innerHTML = "";
@@ -53,21 +56,86 @@ function new_word(data) {
         letterBox.id = word[i];
         letterContainer.appendChild(letterBox);
     }
-}
+   wrongContainer.innerHTML = "";
+   let lives = 6
+   let hangmanBox = document.getElementById("lives");
+   hangmanBox.textContent = lives;
+   }
+
+let found_letters = 0;
 
 function letter_input(data) {
     let boxes = document.getElementsByClassName("letter-box");
+    let is_right_letter = "";
+    //Find if letter is in the word
     for (let i = 0; i < boxes.length; i++) {
-        //For each box
         if (data == boxes[i].id) {
-            //If the letter is in the word
-            boxes[i].textContent = data;
-            return;
+            if (boxes[i].textContent == data) {
+                console.log('same letter: ' + data)
+            }
+            else {
+                boxes[i].textContent = data;
+                is_right_letter = true;
+                found_letters++;
+            }
+        }
+        if (found_letters == boxes.length) {
+            gameWon()
+            console.log("game won")
+            return
         }
     }
-    let wrong_letters_box = document.getElementById("wrong-letters");
-    wrong_letters_box.textContent =
-    wrong_letters_box.textContent + data + "";
+    // If letter is not in the word, display it in the wrong letters box
+    if (is_right_letter == false) {
+        let wrong_letters_box = document.getElementById("wrong-letters");
+        wrong_letters_box.textContent =
+        wrong_letters_box.textContent + data + "";
+        let lives = document.getElementById("lives").textContent;
+        lives--;    
+            // If no lifes left, stop game
+            if (lives == 0) {
+                console.log("no lives left")
+                gameover()
+                return
+            }
+            //Show new life counter
+            else {
+                let hangmanBox = document.getElementById("lives");
+                hangmanBox.textContent = lives;
+                console.log("lives left: " + lives)
+            }
+    }
+    console.log("found letters: " + found_letters)
+}
+
+function ask_word() {
+        socket.emit("request_word");
+        console.log("Sent request for word");
+}
+
+function ask_current_word() {
+    socket.emit("request_current_word");
+    console.log("Sent request for current word");
+}
+
+async function gameover() {
+    console.log("game over function")
+    let hangmanBox = document.getElementById("lives");
+
+    // ask_current_word();
+    hangmanBox.textContent = "Game Over, word was ";
+    await new Promise(r => setTimeout(r, 4000));
+    ask_word();
+    found_letters = 0;
+}
+
+async function gameWon() {
+    console.log("game won function")
+    let hangmanBox = document.getElementById("lives");
+    hangmanBox.textContent = "You Win!";
+    await new Promise(r => setTimeout(r, 2000));
+    ask_word();
+    found_letters = 0;
 }
 
 socket.on("letter", (data) => {

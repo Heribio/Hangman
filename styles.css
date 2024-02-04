@@ -117,6 +117,13 @@ body {
     padding: 10px;
 }
 
+#wrong-letters {
+    padding: 30px;
+    font-family: monospace;
+    font-size: xx-large;
+    color: #FFA800;
+}
+
 #bottom-right {
     flex: 1;
     display: flex;
@@ -127,7 +134,7 @@ body {
     padding: 5%;
 }
 
-.explanatory-text, .label, .title{
+.explanatory-text, .label, .title, .subtitle{
     color: #FFF;
     font-family: 'Rubik', sans-serif;
     font-size: 36px;
@@ -141,6 +148,10 @@ body {
     font-size: 64px;
 }
 
+.subtitle {
+    font-size: 36px;
+}
+
 .title {
     text-align: center;
     font-size: 64px;
@@ -150,6 +161,7 @@ body {
 #word-display {
     display: flex; /* Make it a flex container */
     align-items: center; /* Align items vertically in the flex container */
+    max-width: 600px;
 }
 
 .letter-box {
@@ -158,4 +170,12 @@ body {
     background-color: green;
     margin: 10px;
     border-radius: 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family:monospace;
+    font-weight: 500;
+    font-size: 24px;
 }
