@@ -95,6 +95,10 @@ function letter_input(data) {
             // If no lifes left, stop game
             if (lives == 0) {
                 console.log("no lives left")
+                for (let i = 0; i < boxes.length; i++) {
+                    letter = boxes[i].id
+                    boxes[i].textContent = letter;
+                }
                 gameover()
                 return
             }
