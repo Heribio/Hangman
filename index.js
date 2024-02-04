@@ -89,7 +89,7 @@ function letter_input(data) {
     if (is_right_letter == false) {
         let wrong_letters_box = document.getElementById("wrong-letters");
         wrong_letters_box.textContent =
-        wrong_letters_box.textContent + data + "";
+        wrong_letters_box.textContent + data + " ";
         let lives = document.getElementById("lives").textContent;
         lives--;    
             // If no lifes left, stop game
@@ -118,12 +118,13 @@ function ask_current_word() {
     console.log("Sent request for current word");
 }
 
+//TODO
 async function gameover() {
     console.log("game over function")
     let hangmanBox = document.getElementById("lives");
 
     // ask_current_word();
-    hangmanBox.textContent = "Game Over, word was ";
+    hangmanBox.textContent = "Game Over";
     await new Promise(r => setTimeout(r, 4000));
     ask_word();
     found_letters = 0;
