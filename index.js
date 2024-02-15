@@ -3,6 +3,8 @@ const socket = io.connect("http://localhost:6969/twitch");
 socket.on("connect", () => {
     console.log("Connected to server via WebSocket");
     ask_word();
+    let hangmanBox = document.getElementById("lives");
+    hangmanBox.innerHTML = '<img src="./assets/Hangman_6.png" alt="hangman" width="200" height="200">'
 });
 
 socket.on("chat_message", (data) => {
@@ -58,11 +60,37 @@ function new_word(data) {
     }
    wrongContainer.innerHTML = "";
    let lives = 6
+   globalThis.lives = lives;
    let hangmanBox = document.getElementById("lives");
-   hangmanBox.textContent = lives;
    }
 
 let found_letters = 0;
+
+function hangman(lives) {
+    let hangmanBox = document.getElementById("lives");
+
+    if (lives == 0) {
+        hangmanBox.innerHTML = '<img src="./assets/Hangman_0.png" alt="hangman" width="200" height="400">'
+    }
+    if (lives == 1) {
+        hangmanBox.innerHTML = '<img src="./assets/Hangman_1.png" alt="hangman" width="200" height="400">'
+    }
+    if (lives == 2) {
+        hangmanBox.innerHTML = '<img src="./assets/Hangman_2.png" alt="hangman" width="200" height="400">'
+    }
+    if (lives == 3) {
+        hangmanBox.innerHTML = '<img src="./assets/Hangman_3.png" alt="hangman" width="200" height="400">'
+    }
+    if (lives == 4) {
+        hangmanBox.innerHTML = '<img src="./assets/Hangman_4.png" alt="hangman" width="200" height="400">'
+    }
+    if (lives == 5) {
+        hangmanBox.innerHTML = '<img src="./assets/Hangman_5.png" alt="hangman" width="200" height="400">'
+    }
+    if (lives == 6) {
+        hangmanBox.innerHTML = '<img src="./assets/Hangman_6.png" alt="hangman" width="200" height="400">'
+    }
+} 
 
 function letter_input(data) {
     let boxes = document.getElementsByClassName("letter-box");
@@ -90,8 +118,8 @@ function letter_input(data) {
         let wrong_letters_box = document.getElementById("wrong-letters");
         wrong_letters_box.textContent =
         wrong_letters_box.textContent + data + " ";
-        let lives = document.getElementById("lives").textContent;
-        lives--;    
+        lives--;
+        hangman(lives)
             // If no lifes left, stop game
             if (lives == 0) {
                 console.log("no lives left")
@@ -104,8 +132,7 @@ function letter_input(data) {
             }
             //Show new life counter
             else {
-                let hangmanBox = document.getElementById("lives");
-                hangmanBox.textContent = lives;
+                hangman(lives)
                 console.log("lives left: " + lives)
             }
     }
@@ -130,6 +157,7 @@ async function gameover() {
     // ask_current_word();
     hangmanBox.textContent = "Game Over";
     await new Promise(r => setTimeout(r, 4000));
+    hangmanBox.textContent = "";
     ask_word();
     found_letters = 0;
 }
@@ -139,6 +167,7 @@ async function gameWon() {
     let hangmanBox = document.getElementById("lives");
     hangmanBox.textContent = "You Win!";
     await new Promise(r => setTimeout(r, 2000));
+    hangmanBox.textContent = "";
     ask_word();
     found_letters = 0;
 }
